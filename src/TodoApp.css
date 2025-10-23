@@ -1,96 +1,232 @@
-/* --- 1. GLOBAL RESET AND BASE STYLES (Visibility Fix) --- */
+/* --- 1. THEME DEFINITIONS (UNCHANGED) --- */
+
+/* Light Theme (Default) */
+.app-wrapper.light {
+    --bg-color: #ffffff;      /* Changed to PURE BRIGHT WHITE */
+    --text-color: #333;       /* Black/Dark Gray */
+    --header-bg: #f0f2f5;     /* Changed to OFF-WHITE/VERY LIGHT GRAY */
+    --header-text: #2c3e50;
+    --card-bg: #ffffff;
+    --border-color: #ddd;
+    --input-bg: #ffffff;
+    --link-hover-bg: #ecf0f1;
+}
+
+/* Dark Theme (Using your requested colors - UNCHANGED) */
+.app-wrapper.dark {
+    --bg-color: black; 
+    --text-color: #1DB954; 
+    --header-bg: #1e1e1e; 
+    --header-text: #1DB954; 
+    --card-bg: #282828;
+    --border-color: #444;
+    --input-bg: #333;
+    --link-hover-bg: #3a3a3a;
+}
+
+/* --- 2. GLOBAL RESET AND STRUCTURE (LAYOUT FIX APPLIED) --- */
 body {
-    background-color: #f0f2f5; 
+    background-color: var(--bg-color); 
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    color: #333; /* Default text color is DARK */
+    color: var(--text-color); 
+    transition: background-color 0.3s;
 }
 
-.todo-container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 30px;
-  background-color: #ffffff; /* Component background is WHITE */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
+/* Defensive block to prevent flex interference */
+html, body, #root {
+    width: 100%;
+    min-height: 100%;
+    display: block; 
 }
 
-.header-text {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 30px;
-  font-size: 2.2em;
-  border-bottom: 2px solid #ecf0f1;
-  padding-bottom: 10px;
+.app-wrapper {
+    min-height: 100vh;
+    width: 100%; /* Ensure it's explicitly 100% */
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
-/* --- 2. FORM & INPUT STYLES (Button Visibility Fix) --- */
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  margin-bottom: 20px;
+/* --- FULL WIDTH OUTER CONTAINER --- */
+.main-content {
+    /* Uses full width of the screen, providing side padding */
+    padding: 30px; 
+    margin: 0; 
 }
 
-.auth-form h2 {
-  text-align: center;
-  color: #34495e;
+/* src/TodoApp.css (Add this new rule to your stylesheet) */
+
+.view-filters button {
+    /* Set the background to a consistent blue for visual grouping */
+    background-color: black; 
+    /* CRITICAL FIX: Ensure text is white for contrast against the blue background */
+    color: white !important; 
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: all 0.2s;
 }
+
+.view-filters button:hover {
+    background-color: #2980b9;
+}
+
+/* This style remains to show the 'active' filter */
+.view-filters button[style*="font-weight: bold"] {
+    /* Adds the underline and ensures boldness is visible */
+    text-decoration: underline; 
+    background-color: #2980b9;
+     /* Subtle white underline/shadow */
+}
+
+/* --- MAX-WIDTH INNER CONTAINER (THE FIX) --- */
+.content-inner-wrapper {
+    max-width: 800px; /* Increased maximum width for a wider screen look */
+    width: 95%; /* Use 95% of available space up to max-width */
+    margin: 0 auto;  /* Centers the inner content */
+    padding: 0; 
+}
+
+
+/* --- 3. TOP BAR AND ACCOUNT MENU --- */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: var(--header-bg); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: var(--header-text);
+}
+
+.app-title {
+    font-size: 1.5em;
+    margin: 0;
+    color: var(--header-text);
+}
+
+.top-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.account-menu {
+    position: relative;
+}
+
+.account-btn, .theme-toggle-btn {
+    /* Inherit background-color from header for subtlety */
+    background-color: var(--header-bg) !important; 
+    border: 1px solid var(--border-color) !important;
+    
+    /* CRITICAL FIX: Use the theme's text color */
+    color: var(--header-text) !important; /* Use header text color for best contrast */
+    
+    padding: 8px 15px !important;
+    border-radius: 20px !important; 
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.account-btn:hover, .theme-toggle-btn:hover {
+    background-color: var(--border-color) !important;
+}
+
+.account-dropdown {
+    position: absolute;
+    top: 100%; 
+    right: 0;
+    z-index: 100;
+    min-width: 250px;
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.account-dropdown .user-email {
+    margin: 0 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9em;
+    color: var(--text-color);
+    word-break: break-word;
+}
+
+.logout-btn-dropdown {
+    width: 100%;
+    margin-top: 5px;
+    padding: 8px; 
+    border-radius: 4px !important;
+}
+
+.account-dropdown .auth-form {
+    padding: 0; 
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    margin-bottom: 0;
+}
+
+.auth-form { /* Target the container holding the inputs/button */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* <--- ADDED VERTICAL SPACING */
+}
+
+.account-dropdown .auth-form h2 {
+    color: var(--text-color);
+}
+
+
+/* --- 4. GENERAL INPUTS AND BUTTONS --- */
 
 .auth-form input,
 .add-todo-form input {
   padding: 12px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   font-size: 16px;
-  color: #333; /* Ensure input text is dark */
+  color: var(--text-color); 
+  background-color: var(--input-bg);
 }
 
-/* Ensures all general buttons have white text */
-.auth-form button, .logout-btn, .add-todo-form button {
-  padding: 10px 15px;
+.auth-form button, .add-todo-form button {
   background-color: #3498db;
-  color: white; /* CRITICAL: Ensures text is white */
+  color: white; 
   border: none;
-  border-radius: 6px; 
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.2s;
 }
 
+/* Force form to stretch 100% of the inner wrapper */
 .add-todo-form {
     display: flex;
+    width: 100%; 
     margin-bottom: 30px;
+    gap: 15px;
 }
 
-.add-todo-form input {
-  border-radius: 6px 0 0 6px;
-  border-right: none;
+/* --- 5. LIST AND ITEM STYLES --- */
+.todo-list h2 {
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
 }
-.add-todo-form button {
-  border-radius: 0 6px 6px 0;
-}
-
-
-/* --- 3. LIST AND ITEM STYLES --- */
 
 .todo-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid #f5f5f5;
-  transition: background-color 0.1s;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .todo-item span {
-    color: #333; 
-    cursor: pointer;
+    color: var(--text-color); 
     padding: 5px;
     flex-grow: 1;
 }
@@ -100,47 +236,71 @@ body {
   color: #95a5a6; 
 }
 
-/* --- 4. STATUS PICKER STYLES (Color Fix) --- */
-
-/* Default style for the select box */
+/* --- 6. STATUS PICKER STYLES --- */
+.todo-item select option {
+    /* CRITICAL: Overrides the background color set by .status-picker */
+    background-color: var(--card-bg) !important; 
+    /* Ensures option text is readable in both light/dark mode */
+    color: var(--text-color) !important; 
+    font-weight: normal; /* Removes bolding inside the actual list */
+}
 .todo-item select {
-    padding: 6px 8px;
-    border-radius: 4px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    color: #333; /* Ensure text is dark by default */
+    color: var(--text-color); /* Ensures the currently selected text is readable */
+    background-color: var(--input-bg); /* Use standard input background */
+    border: 1px solid var(--border-color);
 }
 
 /* CUSTOM STATUS COLORS */
-/* Started (Yellowish/Orange) */
+
+.status-picker.status-todo {
+    background-color: #f7f7f7; /* Very light gray/off-white */
+    cursor: pointer;
+    border-color: #c9c9c9;
+    color: #333; /* Dark text for contrast */
+    font-weight: bold;
+}
 .status-picker.status-started {
-    background-color: #fff3cd; 
+    background-color: #ffc107; 
+    cursor: pointer;
     border-color: #ffc107;
-    color: #664d03; 
+    color: black; 
     font-weight: bold;
 }
 
-/* Stuck (Red) */
 .status-picker.status-stuck {
-    background-color: #f8d7da; 
-    border-color: #dc3545;
-    color: #842029; 
+    background-color: #fe2339; 
+    cursor: pointer;
+    border-color: #fe2339;
+    color: black; 
     font-weight: bold;
 }
 
-/* Done (Green) */
 .status-picker.status-done {
-    background-color: #d1e7dd; 
+    background-color: #4fe9a1; 
+    cursor: pointer;
     border-color: #198754;
-    color: #0f5132; 
+    color: black; 
     font-weight: bold;
 }
 
-/* --- 5. OTHER BUTTONS --- */
+/* --- 7. LINK AND ERROR FIXES --- */
+.auth-link {
+  cursor: pointer; 
+  color: #3498db; 
+  text-decoration: underline;
+  padding: 2px 4px; 
+  border-radius: 4px;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.auth-link:hover {
+  color: #2980b9; 
+  background-color: var(--link-hover-bg);
+  text-decoration: none; 
+}
 
 .delete-btn {
-  background-color: #e74c3c;
+  background-color: #ccc;
   padding: 8px 12px;
   margin-left: 10px;
   border-radius: 6px;
@@ -150,21 +310,4 @@ body {
 .restore-btn {
     background-color: #27ae60 !important; 
     margin-right: 10px;
-}
-
-.deleted-text {
-    color: #95a5a6 !important;
-}
-
-.no-tasks {
-  text-align: center;
-  color: #95a5a6;
-  padding: 20px;
-  font-style: italic;
-}
-
-.error {
-  color: #e74c3c;
-  text-align: center;
-  font-weight: bold;
 }
