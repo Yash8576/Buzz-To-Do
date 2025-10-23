@@ -1,0 +1,170 @@
+/* --- 1. GLOBAL RESET AND BASE STYLES (Visibility Fix) --- */
+body {
+    background-color: #f0f2f5; 
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: #333; /* Default text color is DARK */
+}
+
+.todo-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff; /* Component background is WHITE */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.header-text {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 2.2em;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 10px;
+}
+
+/* --- 2. FORM & INPUT STYLES (Button Visibility Fix) --- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-bottom: 20px;
+}
+
+.auth-form h2 {
+  text-align: center;
+  color: #34495e;
+}
+
+.auth-form input,
+.add-todo-form input {
+  padding: 12px;
+  border: 1px solid #bdc3c7;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #333; /* Ensure input text is dark */
+}
+
+/* Ensures all general buttons have white text */
+.auth-form button, .logout-btn, .add-todo-form button {
+  padding: 10px 15px;
+  background-color: #3498db;
+  color: white; /* CRITICAL: Ensures text is white */
+  border: none;
+  border-radius: 6px; 
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.add-todo-form {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.add-todo-form input {
+  border-radius: 6px 0 0 6px;
+  border-right: none;
+}
+.add-todo-form button {
+  border-radius: 0 6px 6px 0;
+}
+
+
+/* --- 3. LIST AND ITEM STYLES --- */
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f5f5f5;
+  transition: background-color 0.1s;
+}
+
+.todo-item span {
+    color: #333; 
+    cursor: pointer;
+    padding: 5px;
+    flex-grow: 1;
+}
+
+.todo-item span.completed {
+  text-decoration: line-through;
+  color: #95a5a6; 
+}
+
+/* --- 4. STATUS PICKER STYLES (Color Fix) --- */
+
+/* Default style for the select box */
+.todo-item select {
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    color: #333; /* Ensure text is dark by default */
+}
+
+/* CUSTOM STATUS COLORS */
+/* Started (Yellowish/Orange) */
+.status-picker.status-started {
+    background-color: #fff3cd; 
+    border-color: #ffc107;
+    color: #664d03; 
+    font-weight: bold;
+}
+
+/* Stuck (Red) */
+.status-picker.status-stuck {
+    background-color: #f8d7da; 
+    border-color: #dc3545;
+    color: #842029; 
+    font-weight: bold;
+}
+
+/* Done (Green) */
+.status-picker.status-done {
+    background-color: #d1e7dd; 
+    border-color: #198754;
+    color: #0f5132; 
+    font-weight: bold;
+}
+
+/* --- 5. OTHER BUTTONS --- */
+
+.delete-btn {
+  background-color: #e74c3c;
+  padding: 8px 12px;
+  margin-left: 10px;
+  border-radius: 6px;
+  line-height: 1;
+}
+
+.restore-btn {
+    background-color: #27ae60 !important; 
+    margin-right: 10px;
+}
+
+.deleted-text {
+    color: #95a5a6 !important;
+}
+
+.no-tasks {
+  text-align: center;
+  color: #95a5a6;
+  padding: 20px;
+  font-style: italic;
+}
+
+.error {
+  color: #e74c3c;
+  text-align: center;
+  font-weight: bold;
+}
